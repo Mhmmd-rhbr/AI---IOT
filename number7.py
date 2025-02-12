@@ -18,6 +18,10 @@ def main():
         if not success:
             print("Failed to capture image from camera.")
             break
+        
+        # Display welcome text at top center
+        cv2.putText(img, "welcome", (img.shape[1]//2 - 100, 50),
+                    cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 0), 3)
 
         # --- Face Mesh and Emotion Detection ---
         img, faces = face_detector.findFaceMesh(img, draw=True)
@@ -108,6 +112,11 @@ def main():
         # Display total finger count
         cv2.putText(img, f"Total Fingers: {totalFingers}", (50, 50),
                     cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
+                    
+        # If hand gesture shows 7 fingers, display "7" at center
+        if totalFingers == 7:
+            cv2.putText(img, "7", (img.shape[1]//2 - 20, img.shape[0]//2),
+                        cv2.FONT_HERSHEY_SIMPLEX, 3, (0, 0, 255), 5)
 
         # Show the main window
         cv2.imshow("Hand and Face Mesh", img)
