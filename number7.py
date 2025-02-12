@@ -9,7 +9,7 @@ def main():
     cap.set(3, 1280)  # Set frame width
     cap.set(4, 720)   # Set frame height
 
-    # Initialize detectors with correct parameters
+    # Initialize detectors with proper parameters
     face_detector = FaceMeshDetector(maxFaces=2, minDetectionCon=0.7, minTrackCon=0.7)
     hand_detector = HandDetector(maxHands=2, detectionCon=0.5, minTrackCon=0.5)
 
@@ -18,9 +18,9 @@ def main():
         if not success:
             print("Failed to capture image from camera.")
             break
-        
-        # Display welcome text at top center
-        cv2.putText(img, "welcome", (img.shape[1]//2 - 100, 50),
+
+        # Display welcome text at the top center
+        cv2.putText(img, "Welcome", (img.shape[1] // 2 - 100, 50),
                     cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 0), 3)
 
         # --- Face Mesh and Emotion Detection ---
@@ -61,9 +61,9 @@ def main():
                 # Display emotion text above face
                 top_point = min(face, key=lambda point: point[1])
                 cv2.putText(img, f"Emotion: {emotion}", (top_point[0] - 50, top_point[1] - 20),
-                           cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+                            cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
-                # Handle surprised face display
+                # If the face is surprised, display the cropped face in a separate window
                 if emotion == "Surprised":
                     x_values = [pt[0] for pt in face]
                     y_values = [pt[1] for pt in face]
@@ -92,7 +92,7 @@ def main():
         totalFingers = 0
 
         if hands:
-            for i, hand in enumerate(hands):
+            for hand in hands:
                 # Count raised fingers
                 fingers = hand_detector.fingersUp(hand)
                 fingerCount = sum(fingers)
@@ -104,18 +104,18 @@ def main():
                 
                 # Display hand information
                 hand_position = hand['center']
-                cv2.putText(img, f"{hand_type}", (hand_position[0]-50, hand_position[1]-50),
-                           cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
-                cv2.putText(img, f"Fingers: {fingerCount}", (hand_position[0]-50, hand_position[1]-20),
-                           cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
+                cv2.putText(img, f"{hand_type}", (hand_position[0] - 50, hand_position[1] - 50),
+                            cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+                cv2.putText(img, f"Fingers: {fingerCount}", (hand_position[0] - 50, hand_position[1] - 20),
+                            cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
 
         # Display total finger count
         cv2.putText(img, f"Total Fingers: {totalFingers}", (50, 50),
                     cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
                     
-        # If hand gesture shows 7 fingers, display "7" at center
+        # If hand gesture shows 7 fingers, display welcome message at the center
         if totalFingers == 7:
-            cv2.putText(img, "7", (img.shape[1]//2 - 20, img.shape[0]//2),
+            cv2.putText(img, "Welcome!", (img.shape[1] // 2 - 100, img.shape[0] // 2),
                         cv2.FONT_HERSHEY_SIMPLEX, 3, (0, 0, 255), 5)
 
         # Show the main window
@@ -125,7 +125,7 @@ def main():
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
-    # Cleanup
+    # Cleanup resources
     cap.release()
     cv2.destroyAllWindows()
 
