@@ -1,4 +1,4 @@
-### **README for SevenFingerWelcome.py**
+### **README for4 SevenFingerWelcome.py**
 
 # **SevenFingerWelcome**
 A real-time computer vision project using OpenCV and cvzone to detect faces, track emotions, and recognize hand gestures. The program displays a **"Welcome!"** message when exactly **seven fingers** are detected.
