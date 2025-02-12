@@ -2,7 +2,7 @@ import cv2
 from cvzone.FaceMeshModule import FaceMeshDetector
 from cvzone.HandTrackingModule import HandDetector
 import numpy as np
-#nuber7 >> welcome msg
+
 def main():
     # Initialize the webcam
     cap = cv2.VideoCapture(0)
